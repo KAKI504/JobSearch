@@ -1,5 +1,6 @@
 package org.example.jobsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Category {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Category parentCategory;
@@ -21,9 +23,11 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory")
     private List<Category> subcategories;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Resume> resumes;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Vacancy> vacancies;
 }

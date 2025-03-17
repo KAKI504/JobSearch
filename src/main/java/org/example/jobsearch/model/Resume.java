@@ -1,5 +1,6 @@
 package org.example.jobsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ public class Resume {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "applicant_id")
     private User applicant;
@@ -35,15 +37,19 @@ public class Resume {
     @Column(name = "update_time")
     private LocalDateTime updateTime;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
     private List<WorkExperienceInfo> workExperiences;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
     private List<EducationInfo> educations;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
     private List<ContactInfo> contactInfos;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
     private List<RespondedApplicant> responses;
 }

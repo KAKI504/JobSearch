@@ -1,5 +1,6 @@
 package org.example.jobsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -14,6 +15,7 @@ public class ContactType {
 
     private String type;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "type")
     private List<ContactInfo> contactInfos;
 }

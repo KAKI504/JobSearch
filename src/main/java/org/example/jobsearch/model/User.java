@@ -1,8 +1,9 @@
 package org.example.jobsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -27,9 +28,11 @@ public class User {
     @Column(name = "account_type")
     private String accountType;
 
+    @JsonIgnore // Полностью игнорируем это поле в JSON
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Resume> resumes;
 
+    @JsonIgnore // Полностью игнорируем это поле в JSON
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Vacancy> vacancies;
 }

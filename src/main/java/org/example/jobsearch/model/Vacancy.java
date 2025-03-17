@@ -1,5 +1,8 @@
 package org.example.jobsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -42,6 +45,7 @@ public class Vacancy {
     @Column(name = "update_time")
     private LocalDateTime updateTime;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL)
     private List<RespondedApplicant> responses;
 }
