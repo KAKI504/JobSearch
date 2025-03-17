@@ -8,8 +8,12 @@ import org.example.jobsearch.repository.CategoryRepository;
 import org.example.jobsearch.repository.UserRepository;
 import org.example.jobsearch.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -93,5 +97,21 @@ public class VacancyService {
             return true;
         }
         return false;
+    }
+
+    public List<Vacancy> searchVacancies(String keyword, Long categoryId,
+                                         BigDecimal minSalary, BigDecimal maxSalary,
+                                         int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("updateTime").descending());
+
+        if (keyword != null && !keyword.isEmpty()) {
+            return vacancyRepository.findByNameContainingIgnoreCaseAndIsActiveTrue(keyword, pageable).getContent();
+        } else if (categoryId != null) {
+            return vacancyRepository.findByCategoryIdAndIsActiveTrue(categoryId, pageable).getContent();
+        } else if (minSalary != null && maxSalary != null) {
+            return vacancyRepository.findBySalaryBetweenAndIsActiveTrue(minSalary, maxSalary, pageable).getContent();
+        } else {
+            return vacancyRepository.findByIsActiveTrue(pageable).getContent();
+        }
     }
 }
