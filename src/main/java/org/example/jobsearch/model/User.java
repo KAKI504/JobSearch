@@ -28,11 +28,11 @@ public class User {
     @Column(name = "account_type")
     private String accountType;
 
-    @JsonIgnore // Полностью игнорируем это поле в JSON
+    @JsonIgnore
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Resume> resumes;
 
-    @JsonIgnore // Полностью игнорируем это поле в JSON
+    @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Vacancy> vacancies;
 }
